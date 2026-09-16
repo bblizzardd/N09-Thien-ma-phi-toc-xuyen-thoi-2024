@@ -15,8 +15,14 @@ screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('Thiên mã phi tốc xuyên thời')
 clock = pygame.time.Clock()
 
-# Thư mục gốc chứa tài nguyên
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+# Thư mục gốc chứa tài nguyên (hỗ trợ cả môi trường script thường và PyInstaller đóng gói)
+if getattr(sys, 'frozen', False):
+    if hasattr(sys, '_MEIPASS') and os.path.exists(os.path.join(sys._MEIPASS, 'WELCOME.png')):
+        BASE_DIR = sys._MEIPASS
+    else:
+        BASE_DIR = os.path.dirname(sys.executable)
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Bảng màu sắc chuẩn
 PINK = (255, 102, 153)
